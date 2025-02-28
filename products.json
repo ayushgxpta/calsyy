@@ -1,16 +1,16 @@
 [
     {
         "id": 1,
-        "name": "Product 1",
+        "name": "Wireless Headphones",
         "price": 29.99,
-        "description": "A great product",
+        "description": "High-quality wireless headphones with noise cancellation.",
         "image": "product1.jpg"
     },
     {
         "id": 2,
-        "name": "Product 2",
+        "name": "Smart Watch",
         "price": 39.99,
-        "description": "Another awesome item",
+        "description": "Track your fitness and stay connected with this sleek smartwatch.",
         "image": "product2.jpg"
     }
 ]
