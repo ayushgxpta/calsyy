@@ -1,16 +1,33 @@
 [
-    {
-        "id": 1,
-        "name": "Wireless Headphones",
-        "price": 29.99,
-        "description": "High-quality wireless headphones with noise cancellation.",
-        "image": "product1.jpg"
-    },
-    {
-        "id": 2,
-        "name": "Smart Watch",
-        "price": 39.99,
-        "description": "Track your fitness and stay connected with this sleek smartwatch.",
-        "image": "product2.jpg"
-    }
+  {
+    "id": 1,
+    "name": "Gold Peel-Off Mask",
+    "price": 589,
+    "image": "product1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Room Heater",
+    "price": 899,
+    "image": "product2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Vacuum Storage Bags",
+    "price": 999,
+    "image": "product3.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Kitchen Rust Remover",
+    "price": 699,
+    "image": "product4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Anti-Static Massage Comb",
+    "price": 699,
+    "image": "product5.jpg"
+  },
+  /* ... Add 15 more products ... */
 ]
