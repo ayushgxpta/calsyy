@@ -1,33 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Store - Modern E-Commerce</title>
-    <meta name="description" content="Welcome to My Store, your one-stop shop for quality products.">
-    <link rel="stylesheet" href="style.css">
-    <!-- Add Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CartAndBuy | Online Shopping</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Store</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#products">Products</a>
-        </nav>
-    </header>
+  <header>
+    <nav class="navbar">
+      <img src="logo.png" alt="CartAndBuy" class="logo">
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#home-decor">Home Decor</a></li>
+        <li><a href="#car-accessories">Car & Bike Accessories</a></li>
+        <li><a href="#electronics">Electronics</a></li>
+        <li><a href="#fashion">Fashion</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="icons">
+        <a href="#"><i class="fa fa-search"></i></a>
+        <a href="#"><i class="fa fa-user"></i></a>
+        <a href="#"><i class="fa fa-shopping-cart"></i></a>
+      </div>
+    </nav>
+  </header>
 
-    <main>
-        <section class="products-grid" id="products">
-            <!-- Products will be loaded here by JavaScript -->
-        </section>
-    </main>
+  <section id="hero">
+    <div class="hero-content">
+      <h1>Winter Sale Up to 50% Off</h1>
+      <p>Exclusive discounts on top products - limited time offer!</p>
+      <a href="#products" class="cta-btn">Shop Now</a>
+    </div>
+  </section>
 
-    <footer>
-        <p>© 2024 My Store. All rights reserved.</p>
-    </footer>
+  <section id="products" class="product-grid">
+    <h2>Best Sellers</h2>
+    <div class="products-container"></div>
+  </section>
 
-    <script src="script.js"></script>
+  <section id="features">
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/FF5733/truck.png" alt="Free Shipping">
+      <h3>Free Shipping</h3>
+      <p>On all items with no minimums</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/FF5733/money.png" alt="Cash on Delivery">
+      <h3>Cash on Delivery</h3>
+      <p>Pay online or COD - your choice</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://img.icons8.com/ios-filled/50/FF5733/whatsapp.png" alt="WhatsApp Support">
+      <h3>WhatsApp Support</h3>
+      <p>24/7 customer support</p>
+    </div>
+  </section>
+
+  <section id="newsletter">
+    <h2>Subscribe to Our Newsletter</h2>
+    <p>Get exclusive offers and updates delivered to your inbox</p>
+    <form>
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <img src="logo.png" alt="CartAndBuy" class="footer-logo">
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <a href="#home-decor">Home Decor</a>
+        <a href="#car-accessories">Car Accessories</a>
+        <a href="#electronics">Electronics</a>
+        <a href="#fashion">Fashion</a>
+      </div>
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p>Email: support@cartandbuy.in</p>
+        <p>WhatsApp: +91 8595034548</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 CartAndBuy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
