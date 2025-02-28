@@ -1,18 +1,23 @@
-// Load products from JSON
-fetch('products.json')
-    .then(response => response.json())
-    .then(products => {
-        const grid = document.querySelector('.products-grid');
-        
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <img src="images/${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>$${product.price}</p>
-                <a href="product.html?id=${product.id}">View Product</a>
-            `;
-            grid.appendChild(productCard);
-        });
-    });
+// Show loading spinner
+const grid = document.querySelector('.products-grid');
+grid.innerHTML = '<div class="loading-spinner"></div>';
+
+// Add CSS for loading spinner
+const style = document.createElement('style');
+style.innerHTML = `
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+`;
+document.head.appendChild(style);
