@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Product</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .edit-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #c00;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .form-group button {
+      background: #c00;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background: #a00000;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+
+    .mini-description-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .image-container img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: grab;
+    }
+
+    .image-container img.dragging {
+      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .reorder-instructions {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="edit-container">
+    <h1>Edit Product</h1>
+    <form id="edit-product-form">
+      <!-- Hidden field to hold product ID -->
+      <input type="hidden" id="product-id" />
+
+      <div class="form-group">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="product-price">Price:</label>
+        <input type="number" id="product-price" required />
+      </div>
+
+      <div class="form-group">
+        <label for="product-corrected-price">Corrected Price:</label>
+        <input type="number" id="product-corrected-price" />
+      </div>
+
+      <div class="form-group">
+        <label for="product-category">Category:</label>
+        <select id="product-category" required>
+          <option value="Best Sellers">Best Sellers</option>
+          <option value="Trending Products">Trending Products</option>
+          <option value="Home Decor">Home Decor</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="product-description">Description:</label>
+        <textarea id="product-description" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="product-mini-description">Mini Description:</label>
+        <textarea id="product-mini-description" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="product-images">Current Images:</label>
+        <div class="reorder-instructions">Drag and drop to reorder images</div>
+        <div class="image-container" id="uploaded-images"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="product-images">Upload New Images (Optional, exactly 5 images if updated):</label>
+        <input type="file" id="product-images" accept="image/*" multiple />
+        <div id="product-images-error" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="product-description-pictures">Upload Description Pictures (Optional, at least 1 image if updated):</label>
+        <input type="file" id="product-description-pictures" accept="image/*" multiple />
+        <div id="product-description-pictures-error" class="error-message"></div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Update Product</button>
+      </div>
+      
+      <div class="form-group">
+        <label>Description Pictures:</label>
+        <div id="mini-description-images"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Helper to get query parameter from URL
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+
+    // Get the product id from query string
+    const productId = getQueryParam('id') || '67c77054d45139306ba692d5'; // fallback to a default id if needed
+    document.getElementById('product-id').value = productId;
+
+    // Improved drag and drop functionality for image reordering
+    let dragSrcElement = null;
+
+    function handleDragStart(e) {
+      dragSrcElement = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', this.src); // Store the image source
+      this.classList.add('dragging');
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      
+      if (dragSrcElement !== this) {
+        // Save the target image source
+        const tempSrc = this.src;
+        // Update target image with dragged image source
+        this.src = dragSrcElement.src;
+        // Update dragged image with original target source
+        dragSrcElement.src = tempSrc;
+      }
+      
+      return false;
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+    }
+
+    // Function to load current product data with proper drag-and-drop
+    async function loadProduct() {
+      try {
+        const response = await fetch(`https://calsyy-backend.onrender.com/api/products/${productId}`);
+        if (!response.ok) throw new Error('Product not found');
+        const product = await response.json();
+
+        // Populate form fields with current product data
+        document.getElementById('product-name').value = product.name || '';
+        document.getElementById('product-price').value = product.price || '';
+        document.getElementById('product-corrected-price').value = product.correctedPrice || '';
+        document.getElementById('product-category').value = product.category || '';
+        document.getElementById('product-description').value = product.description || '';
+        document.getElementById('product-mini-description').value = product.miniDescription || '';
+
+        // Display uploaded images with enhanced drag-and-drop
+        if (product.images && product.images.length > 0) {
+          const imageContainer = document.getElementById('uploaded-images');
+          imageContainer.innerHTML = '';
+          
+          // Store the original order of images to track changes
+          window.originalImages = [...product.images];
+          
+          product.images.forEach((imgSrc, index) => {
+            const imgElement = document.createElement('img');
+            imgElement.src = imgSrc;
+            imgElement.alt = `Product Image ${index + 1}`;
+            imgElement.dataset.index = index; // Store the original index
+            imgElement.draggable = true;
+            
+            // Add drag and drop event listeners
+            imgElement.addEventListener('dragstart', handleDragStart);
+            imgElement.addEventListener('dragover', handleDragOver);
+            imgElement.addEventListener('drop', handleDrop);
+            imgElement.addEventListener('dragend', handleDragEnd);
+            
+            imageContainer.appendChild(imgElement);
+          });
+        }
+
+        // Display description pictures
+        if (product.descriptionPictures && product.descriptionPictures.length > 0) {
+          const imageContainer = document.getElementById("mini-description-images");
+          imageContainer.innerHTML = "";
+
+          product.descriptionPictures.forEach((imgSrc, index) => {
+            let imgElement = document.createElement("img");
+            imgElement.src = imgSrc;
+            imgElement.alt = `Description Image ${index + 1}`;
+            imgElement.classList.add("mini-description-img");
+            imgElement.onclick = () => insertImage(imgSrc);
+            imageContainer.appendChild(imgElement);
+          });
+        }
+      } catch (error) {
+        console.error('Error loading product:', error);
+        alert('Failed to load product data.');
+      }
+    }
+
+    // Function to insert image tag to clipboard
+    function insertImage(imgSrc) {
+      let imgTag = `<img src="${imgSrc}" alt="Product Description Image">`;
+      navigator.clipboard.writeText(imgTag).then(() => {
+        alert("Image tag copied! Paste it where you want.");
+      });
+    }
+
+    // Function to convert image file to base64
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    }
+
+    // Handle form submission to update the product
+    const editForm = document.getElementById('edit-product-form');
+    editForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = document.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Updating...';
+
+      // Get form data
+      const updatedProduct = {
+        name: document.getElementById('product-name').value,
+        price: parseFloat(document.getElementById('product-price').value),
+        correctedPrice: parseFloat(document.getElementById('product-corrected-price').value) || null,
+        category: document.getElementById('product-category').value,
+        description: document.getElementById('product-description').value,
+        miniDescription: document.getElementById('product-mini-description').value,
+      };
+
+      // Handle image uploads (only if new images are provided)
+      const productImages = document.getElementById('product-images').files;
+      const productDescriptionPictures = document.getElementById('product-description-pictures').files;
+
+      if (productImages.length > 0) {
+        if (productImages.length !== 5) {
+          document.getElementById('product-images-error').textContent = 'Exactly 5 images are required if updating.';
+          submitButton.disabled = false;
+          submitButton.textContent = 'Update Product';
+          return;
+        } else {
+          document.getElementById('product-images-error').textContent = '';
+          try {
+            updatedProduct.images = await Promise.all([...productImages].map(readFileAsBase64));
+          } catch (error) {
+            console.error('Error reading images:', error);
+            alert('Error uploading images. Please try again.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Update Product';
+            return;
+          }
+        }
+      } else {
+        // Get the current order of images after potential drag-and-drop reordering
+        const currentImageOrder = [];
+        const imageElements = document.querySelectorAll('#uploaded-images img');
+        imageElements.forEach(img => {
+          currentImageOrder.push(img.src);
+        });
+        
+        // Only update images array if order has changed
+        if (currentImageOrder.length > 0) {
+          updatedProduct.images = currentImageOrder;
+        }
+      }
+
+      if (productDescriptionPictures.length > 0) {
+        if (productDescriptionPictures.length < 1) {
+          document.getElementById('product-description-pictures-error').textContent = 'At least 1 description picture is required if updating.';
+          submitButton.disabled = false;
+          submitButton.textContent = 'Update Product';
+          return;
+        } else {
+          document.getElementById('product-description-pictures-error').textContent = '';
+          try {
+            updatedProduct.descriptionPictures = await Promise.all([...productDescriptionPictures].map(readFileAsBase64));
+          } catch (error) {
+            console.error('Error reading description pictures:', error);
+            alert('Error uploading description pictures. Please try again.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Update Product';
+            return;
+          }
+        }
+      }
+
+      try {
+        const response = await fetch(`https://calsyy-backend.onrender.com/api/products/${productId}`, {
+          method: 'PUT', // Using PUT to update the product
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedProduct), // Send JSON payload
+        });
+
+        if (response.ok) {
+          alert('Product updated successfully!');
+          window.location.href = 'admin.html'; // Redirect to admin page
+        } else {
+          const errorData = await response.json();
+          console.error('Error updating product:', errorData);
+          alert('Failed to update product. See console for details.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error updating product.');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Update Product';
+      }
+    });
+
+    // Call loadProduct on page load
+    window.addEventListener('DOMContentLoaded', loadProduct);
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"name": "calsyy",
+			"path": "."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+
+			
+
+		{
+			"name": "Launch Chrome",
+			"request": "launch",
+			"type": "chrome",
+"url": "E:\\Wesite from github\\calsyy\\index.html",
+			"webRoot": "${workspaceFolder}"
+		}
+		]
+	}
+}
