@@ -3,30 +3,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CartAndBuy | Online Shopping</title>
+  <title>Calsyy | Online Shopping</title>
   <link rel="stylesheet" href="style.css">
-</head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Hover effects for product cards */
+    .product-card {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border-color: #c00;
+    }
+  
+    /* Smooth transition for CTA buttons */
+    .cta-btn {
+      transition: all 0.3s ease;
+    }
+  </style>
+  <style>
+    /* Additional hover effects */
+    .product-card h3,
+    .product-card p {
+      transition: all 0.3s ease;
+    }
+    
+    .product-card:hover h3 {
+      color: #c00;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  
+    .product-card:hover p {
+      transform: translateY(2px);
+      color: #333;
+    }
+  
+    .cta-btn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(192, 0, 0, 0.3);
+      background: linear-gradient(145deg, #c00, #a00000);
+    }
+
+.product-card:hover img {
+  transform: translateY(-10px); /* Lift image on hover */
+}
+
+#products, #Trending\ Products {
+  overflow: hidden; /* Hide overflowing parts of images */
+  padding-top: 50px; /* Add space for the overlapping images */
+}
+  </style>
+  <style>
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        margin: 15% auto;
+        border-radius: 10px;
+        position: relative;
+        text-align: center;
+    }
+    
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        font-size: 28px;
+        cursor: pointer;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 25px;
+    }
+    
+    .view-cart-btn, .checkout-btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .view-cart-btn {
+        background: #fff;
+        color: #c00;
+        border: 2px solid #c00;
+    }
+    
+    .checkout-btn {
+        background: linear-gradient(145deg, #c00, #a00000);
+        color: white;
+    }
+    
+    .continue-shopping {
+        color: #666;
+        margin-top: 20px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    
+    #modalProductImage {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin: 0 auto 15px;
+        border-radius: 8px;
+    }
+    /* Center the hover effect */
+.product-card {
+  position: relative;
+  overflow: visible;
+}
+
+.product-card img {
+  height: 200px;
+  object-fit: contain;
+  object-position: center;
+  margin-top: -5px;
+  transition: all 0.3s ease;
+  background: #f5f5f5;
+  border-radius: 8px;
+  position: relative; /* Add this */
+  z-index: 1; /* Add this */
+}
+
+.product-card:hover img {
+  transform: translateY(-5px) scale(1.05);
+  z-index: 2; /* Bring image forward */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Ensure the image stays centered */
+.product-card:hover {
+  transform: none; /* Remove any card movement */
+}
+</style>
+    <style>
+      #hero {
+  height: 40vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+              url('https://img.freepik.com/premium-photo/fashion-elegant-pretty-woman-model-stylish-trendy-black-clothes-with-top-blazer-wears-cool-modern-sunglasses-walks-city-urban-female-business-style-look-outfit_338491-17955.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.cta-btn {
+  background: #c00;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #a00000;
+}
+      </style>
+      <style>
+        /* Improve product image visibility */
+        .product-card {
+          position: relative;
+          overflow: visible; /* Allow full image display */
+        }
+        
+        .product-card:hover img {
+          transform: translateY(-5px) scale(1.05); /* Subtle zoom */
+          z-index: 2; /* Bring image forward on hover */
+        }
+        
+        .products-container {
+          padding: 20px 0; /* Add breathing space */
+        }
+        
+        /* Ensure product cards have consistent height */
+
+        </style>
+    </head>
 <body>
   <header>
     <nav class="navbar">
-      <img src="logo.png" alt="CartAndBuy" class="logo">
+      <img src="./images/calsyylogo.jpg" alt="Calsyy Logo" class="logo">
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#home-decor">Home Decor</a></li>
-        <li><a href="#car-accessories">Car & Bike Accessories</a></li>
-        <li><a href="#electronics">Electronics</a></li>
-        <li><a href="#fashion">Fashion</a></li>
-        <li><a href="#contact">Contact</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#home-decor">Home Decor</a></li>
+          <li><a href="#car-accessories">Car & Bike Accessories</a></li>
+          <li><a href="#electronics">Electronics</a></li>
+          <li><a href="#fashion">Fashion</a></li>
+          <li><a href="contact.html">Contact</a></li>
       </ul>
-      <div class="icons">
-        <a href="#"><i class="fa fa-search"></i></a>
-        <a href="#"><i class="fa fa-user"></i></a>
-        <a href="#"><i class="fa fa-shopping-cart"></i></a>
-      </div>
-    </nav>
+  </nav>
   </header>
 
   <section id="hero">
+    <div class="hero-bg"></div>
     <div class="hero-content">
       <h1>Winter Sale Up to 50% Off</h1>
       <p>Exclusive discounts on top products - limited time offer!</p>
@@ -34,10 +264,89 @@
     </div>
   </section>
 
-  <section id="products" class="product-grid">
-    <h2>Best Sellers</h2>
-    <div class="products-container"></div>
   </section>
+  <section id="Best-Sellers" class="product-grid">
+    <h2>Best Sellers</h2>
+    <div class="products-container">
+      <!-- Static Product Cards -->
+      <div class="product-card">
+        <a href="dodo.html"><img src="./images/51wpIBfrIEL._AC_SL1500_.jpg" alt="Hair Identifier Mask">
+        <h3>Hair Identifier Mask</h3>
+        <p>₹589</p></a>
+        <button class="cta-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <a href="dodo.html"><img src="./images/Screenshot 2025-02-24 124739.png" alt="Kitchen Stickers Organizer">
+        <h3>Kitchen Stickers Organizer</h3>
+        <p>₹899</p></a>
+        <button class="cta-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <a href="dodo.html"><img src="./images/61BwDH-VLrL._AC_SL1500_.jpg" alt="Dodo Duck Night Lamp">
+        <h3>Dodo Duck Night Lamp</h3>
+        <p>₹999</p></a>
+        <button class="cta-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <a href="dodo.html"><img src="./images/7155ZK23qzL._SL1500_.jpg" alt="Mini Juice Blender">
+        <h3>Mini Juice Blender</h3>
+        <p>₹699</p></a>
+        <button class="cta-btn">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <a href="dodo.html"><img src="./images/Screenshot 2025-02-24 124758.png" alt="Fingerprint Smart Padlock">
+        <h3>Fingerprint Smart Padlock</h3>
+        <p>₹699</p></a>
+        <button class="cta-btn">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section id="Trending-Products" class="product-grid">
+  <h2>Trending Products</h2>
+  <div class="products-container">
+    <!-- Static Product Cards -->
+    <div class="product-card">
+      <a href="dodo.html"><img src="./images/product1.jpeg" alt="Hair Identifier Mask"data-tooltip="High-quality hair mask for dry hair">
+      <h3>Cleaning Mob</h3>
+      <p>₹589</p></a>
+      <button class="cta-btn">Add to Cart</button>
+    </div>
+    
+    <div class="product-card">
+      <a href="dodo.html"><img src="./images/7355726388.jpeg" alt="Kitchen Stickers Organizer">
+      <h3>RoseMary Hair Growth | Buy 1 Get 2 Free </h3>
+      <p>₹899</p></a>
+      <button class="cta-btn">Add to Cart</button>
+    </div>
+    
+    <div class="product-card">
+      <a href="dodo.html"><img src="./images/61ZWwzrfjJL._AC_SL1500_.jpg" alt="Dodo Duck Night Lamp"></a>
+      <h3>Car Restore Cream</h3>
+      <p>₹999</p></a>
+      <button class="cta-btn">Add to Cart</button>
+    </div>
+    
+    <div class="product-card">
+      <a href="dodo.html"><img src="./images/51e-WL39b2L.jpg" alt="Mini Juice Blender">
+      <h3>Cornor Sleeves</h3>
+      <p>₹699</p></a>
+      <button class="cta-btn">Add to Cart</button>
+    </div>
+    
+    <div class="product-card">
+      <a href="dodo.html"><img src="./images/Solar Wall light.jpg" alt="Fingerprint Smart Padlock">
+      <h3>Solar Wall light</h3>
+      <p>₹699</p></a>
+      <button class="cta-btn">Add to Cart</button>
+    </div>
+  </div>
+</section>
 
   <section id="features">
     <div class="feature-card">
@@ -66,27 +375,160 @@
     </form>
   </section>
 
-  <footer>
-    <div class="footer-content">
-      <img src="logo.png" alt="CartAndBuy" class="footer-logo">
-      <div class="footer-links">
-        <h3>Quick Links</h3>
-        <a href="#home-decor">Home Decor</a>
-        <a href="#car-accessories">Car Accessories</a>
-        <a href="#electronics">Electronics</a>
-        <a href="#fashion">Fashion</a>
-      </div>
-      <div class="footer-contact">
-        <h3>Contact Us</h3>
-        <p>Email: support@cartandbuy.in</p>
-        <p>WhatsApp: +91 8595034548</p>
-      </div>
+  <footer class="Section1">
+    <div class="second">
+        <img src="./images/calsyylogo.jpg" alt="Calsyy Logo" class="footerlogo">
     </div>
-    <div class="copyright">
-      <p>&copy; 2025 CartAndBuy. All rights reserved.</p>
-    </div>
-  </footer>
+    
+        <div class="col">
+        <h4>Contact</h4>
+        <p><b>📍 Address:</b> Floating somewhere in your hearts 💅 (<strong>Rent-free, of course!</strong>)</p>  
+        <p><b>⏰ Hours:</b> 9:00 AM - 9:00 PM, Mon - Sat 😍 (<strong>Even superheroes take Sundays off!</strong>)</p>  
+        <p><b>📞 Phone:</b> IFKYK – Just Kidding! (Drop us a DM on the Contact page, and we’ll <strong>swoop in like Superman! 🦸‍♂️⚡</strong>)</p>  
+         
 
+        </div>
+        <div class="col">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+      <p>&copy; 2025 Calsyy. All rights reserved.</p>
+  </div>
+  
   <script src="script.js"></script>
+<!-- Add this notification container before </body> -->
+<div class="cart-notification">
+  <div class="notification-content">
+    <span class="close-notification">&times;</span>
+    <img class="notification-product-image" src="" alt="Product">
+    <div class="notification-details">
+      <p>✓ Added to Cart</p>
+      <div class="notification-subtext">
+        <span class="notification-product-name"></span>
+        <span class="notification-product-price"></span>
+      </div>
+      <a href="#cart" class="view-cart-link">View Cart (<span class="cart-count">0</span>)</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Updated Cart Logic
+let cartItems = 0;
+
+function showCartNotification(productName, price, imageUrl) {
+  const notification = document.querySelector('.cart-notification');
+  const productImage = notification.querySelector('.notification-product-image');
+  const productNameElement = notification.querySelector('.notification-product-name');
+  const productPriceElement = notification.querySelector('.notification-product-price');
+  const cartCountElement = notification.querySelector('.cart-count');
+
+  productImage.src = imageUrl;
+  productNameElement.textContent = productName;
+  productPriceElement.textContent = price;
+  cartItems++;
+  cartCountElement.textContent = cartItems;
+
+  notification.classList.add('active');
+
+  setTimeout(() => {
+    notification.classList.remove('active');
+  }, 3000);
+}
+
+document.querySelectorAll('.cta-btn').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const productCard = e.target.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productPrice = productCard.querySelector('p').textContent;
+    const productImage = productCard.querySelector('img').src;
+
+    showCartNotification(productName, productPrice, productImage);
+  });
+});
+</script>
+<script>
+  document.getElementById('hero').addEventListener('mousemove', (e) => {
+    const hero = e.currentTarget;
+    const bg = hero.querySelector('.hero-bg');
+    const rect = hero.getBoundingClientRect();
+    
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    
+    const moveX = (x - 0.5) * 50; // Adjust 50 for movement intensity
+    const moveY = (y - 0.5) * 50;
+    
+    bg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  });
+  // Function to load products from the backend
+  async function loadProducts() {
+  try {
+    const response = await fetch('https://calsyy-backend.onrender.com/api/products');
+    const products = await response.json();
+
+    // Only remove dynamically added products
+    document.querySelectorAll('.products-container').forEach(container => {
+      container.querySelectorAll('.dynamic-product').forEach(el => el.remove());
+    });
+
+    // Add products to appropriate sections
+    products.forEach(product => {
+      const sectionId = product.category.replace(/ /g, '-');
+      const container = document.querySelector(`#${sectionId} .products-container`);
+      
+      if (container) {
+    const productCard = document.createElement('div');
+    productCard.className = 'product-card dynamic-product'; // Add dynamic-product class
+
+    // Ensure there's at least one image, otherwise use a placeholder
+    const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'placeholder.jpg';
+
+    productCard.innerHTML = `
+       <a href="dodo.html?id=${product._id}">
+          <img src="${imageUrl}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>₹${product.price}</p>
+       </a>
+       <button class="cta-btn">Add to Cart</button>
+    `;
+
+    container.appendChild(productCard);
+}
+
+    });
+
+    // Reattach click handlers to new buttons
+    document.querySelectorAll('.cta-btn').forEach(button => {
+      button.addEventListener('click', handleAddToCart);
+    });
+
+  } catch (error) {
+    console.error('Error loading products:', error);
+  }
+}
+
+  // Load products when page loads
+  window.addEventListener('load', loadProducts);
+
+  // Handle "Add to Cart" button clicks
+  function handleAddToCart(e) {
+    const productCard = e.target.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productPrice = productCard.querySelector('p').textContent;
+    const productImage = productCard.querySelector('img').src;
+
+    showCartNotification(productName, productPrice, productImage);
+  }
+</script>
+  </script>
 </body>
 </html>
