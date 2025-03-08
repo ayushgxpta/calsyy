@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart | Calsyy</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Cart Page Styles */
+    .cart-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      z-index: 900; /* Ensure cart container is below the modal */
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      margin-right: 15px;
+      border-radius: 8px;
+    }
+
+    .cart-item h4 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .cart-item p {
+      margin: 0;
+      font-size: 16px;
+      color: #777;
+    }
+
+    .cart-item .quantity {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .cart-item .quantity input {
+      width: 60px;
+      text-align: center;
+      margin: 0 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 5px;
+    }
+
+    .cart-item .quantity button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .cart-item .quantity button:hover {
+      background-color: #0056b3;
+    }
+
+    .cart-item .remove-btn {
+      margin-left: 15px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 8px 12px;
+      transition: background-color 0.3s;
+    }
+
+    .cart-item .remove-btn:hover {
+      background-color: #c82333;
+    }
+
+    .cart-total {
+      text-align: right;
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .buy-now-btn {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+
+    .buy-now-btn:hover {
+      background-color: #218838;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000; /* Adjusted z-index to ensure modal appears above other content */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8); /* Darker background to dim the rest of the page */
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 1001; /* Ensure modal content is above the dimmed background */
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .modal input, .modal textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .order-now-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 12px 20px;
+      font-size: 18px;
+      transition: background-color 0.3s;
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .order-now-btn:hover {
+      background-color: #218838;
+    }
+
+    #order-summary {
+      margin-bottom: 20px;
+    }
+
+    #order-summary div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    #order-summary img {
+      border-radius: 8px;
+    }
+
+    #order-summary p {
+      margin: 0;
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html">
+        <img src="https://calsyy.page/image/calsyylogo.jpg" alt="Calsyy Logo" class="logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#home-decor">Home Decor</a></li>
+        <li><a href="#car-accessories">Car & Bike Accessories</a></li>
+        <li><a href="#electronics">Electronics</a></li>
+        <li><a href="#fashion">Fashion</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+    <h2>Your Cart</h2>
+    <div class="cart-items">
+      <!-- Cart items will be dynamically added here -->
+    </div>
+    <div class="cart-total">
+      Total: ₹<span id="cart-total-value">0</span>
+    </div>
+    <button class="buy-now-btn">Buy Now</button>
+  </div>
+
+  <div id="codModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Cash on Delivery Details</h2>
+      <div id="order-summary">
+        <!-- Order summary will be dynamically added here -->
+      </div>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="address" placeholder="Address" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <textarea id="notes" placeholder="Additional Notes"></textarea>
+      <button class="order-now-btn" onclick="placeOrder()">Order Now</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Initialize EmailJS with the Public Key (User ID)
+    emailjs.init('r-Kq_LGSDLDr2iedE'); // Replace with your EmailJS Public Key (User ID)
+
+    // Load cart data from localStorage
+    const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+    console.log('Loaded cart data:', cartData);
+
+    function updateCart() {
+      const cartItemsContainer = document.querySelector('.cart-items');
+      const cartTotalValue = document.getElementById('cart-total-value');
+      const buyNowButton = document.querySelector('.buy-now-btn');
+      let totalValue = 0;
+
+      cartItemsContainer.innerHTML = ''; // Clear existing items
+
+      cartData.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+
+        cartItem.innerHTML = `
+          <img src="${item.imageUrl}" alt="${item.name}">
+          <div>
+            <h4>${item.name}</h4>
+            <p>₹${item.price}</p>
+          </div>
+          <div class="quantity">
+            <button onclick="decreaseQuantity(${index})">-</button>
+            <input type="number" value="${item.quantity}" min="1" onchange="changeQuantity(${index}, this.value)">
+            <button onclick="increaseQuantity(${index})">+</button>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+        totalValue += item.price * item.quantity;
+      });
+
+      cartTotalValue.textContent = totalValue;
+      console.log('Updated cart total value:', totalValue);
+      localStorage.setItem('cartData', JSON.stringify(cartData)); // Save updated cart data to localStorage
+
+      // Display message if cart is empty
+      if (cartData.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty. How about adding some amazing products? 😉</p>';
+        buyNowButton.textContent = 'Add Products';
+        buyNowButton.onclick = () => window.location.href = 'index.html';
+      } else {
+        buyNowButton.textContent = 'Buy Now';
+        buyNowButton.onclick = openModal;
+      }
+    }
+
+    function removeItem(index) {
+      cartData.splice(index, 1);
+      updateCart();
+    }
+
+    function changeQuantity(index, quantity) {
+      cartData[index].quantity = parseInt(quantity);
+      updateCart();
+    }
+
+    function increaseQuantity(index) {
+      cartData[index].quantity += 1;
+      updateCart();
+    }
+
+    function decreaseQuantity(index) {
+      if (cartData[index].quantity > 1) {
+        cartData[index].quantity -= 1;
+      } else {
+        cartData.splice(index, 1);
+      }
+      updateCart();
+    }
+
+    const modal = document.getElementById("codModal");
+    const closeModal = document.getElementsByClassName("close")[0];
+
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function openModal() {
+      const orderSummaryContainer = document.getElementById('order-summary');
+      orderSummaryContainer.innerHTML = ''; // Clear existing summary
+
+      cartData.forEach(item => {
+        const summaryItem = document.createElement('div');
+        summaryItem.innerHTML = `
+          <img src="${item.imageUrl}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+          <p>${item.name} - Quantity: ${item.quantity} - Price: ₹${item.price * item.quantity}</p>
+        `;
+        orderSummaryContainer.appendChild(summaryItem);
+      });
+
+      modal.style.display = "block";
+    }
+
+    function placeOrder() {
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+      const phone = document.getElementById('phone').value;
+      const notes = document.getElementById('notes').value;
+
+      if (name && address && phone) {
+        const orderDetails = cartData.map(item => `${item.name} - Quantity: ${item.quantity} - Price: ₹${item.price * item.quantity}`).join('\n');
+
+        const templateParams = {
+          to_email: 'c1ayysh@gmail.com',
+          from_name: name,
+          address: address,
+          phone: phone,
+          notes: notes,
+          order_details: orderDetails,
+          total: document.getElementById('cart-total-value').textContent
+        };
+
+        const emailData = {
+          service_id: 'service_hsjq4uq', // Replace with your actual service ID
+          template_id: 'template_x5i7fbi', // Replace with your actual template ID
+          user_id: 'r-Kq_LGSDLDr2iedE', // Replace with your actual user ID
+          template_params: templateParams,
+        };
+
+        console.log("Sending data to EmailJS: ", emailData);
+
+        emailjs.send(emailData.service_id, emailData.template_id, emailData.template_params, emailData.user_id)
+          .then(function(response) {
+            console.log('Email sent successfully:', response);
+            alert('Order placed successfully!');
+            modal.style.display = "none";
+            localStorage.removeItem('cartData');
+            window.location.href = 'index.html';
+          }, function(error) {
+            console.error('Failed to send email:', error);
+            alert('Failed to send order details. Please try again.');
+          });
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    }
+
+    // Update cart on page load
+    window.addEventListener('load', updateCart);
+  </script>
+</body>
+</html>
