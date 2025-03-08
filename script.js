@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('password-prompt').style.display = 'none';
     });
   }
-});
-document.addEventListener("DOMContentLoaded", function () {
+
+  // Product slider functionality
   const productsGrid = document.querySelector(".products-grid");
   const prevButton = document.querySelector(".slider-controls .prev");
   const nextButton = document.querySelector(".slider-controls .next");
@@ -59,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
           });
       });
   }
-});
-document.addEventListener("DOMContentLoaded", function () {
+
+  // Review system functionality
   const toggleButton = document.querySelector(".toggle-review-form");
   const reviewFormContainer = document.querySelector(".add-review");
   const reviewForm = document.getElementById("reviewForm");
@@ -132,8 +132,122 @@ document.addEventListener("DOMContentLoaded", function () {
           reviewFormContainer.style.display = "none";
       });
   }
-});
 
+  // Newsletter form submission
+  const newsletterForm = document.querySelector('#newsletter form');
+  if (newsletterForm) {
+      newsletterForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const emailInput = this.querySelector('input[type="email"]');
+          const email = emailInput.value;
+          
+          try {
+              // Show loading state
+              emailInput.disabled = true;
+              const submitButton = this.querySelector('button');
+              submitButton.disabled = true;
+              submitButton.textContent = 'Subscribing...';
+
+              // Send to server
+              const response = await fetch('https://calsyy-backend.onrender.com/api/newsletter/subscribe', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ email })
+              });
+
+              if (!response.ok) throw new Error('Subscription failed');
+
+              alert('Thank you for subscribing! You will receive updates at: ' + email);
+              this.reset();
+          } catch (error) {
+              alert('Sorry, there was an error subscribing. Please try again later.');
+              console.error('Newsletter subscription error:', error);
+          } finally {
+              // Reset loading state
+              emailInput.disabled = false;
+              const submitButton = this.querySelector('button');
+              submitButton.disabled = false;
+              submitButton.textContent = 'Subscribe';
+          }
+      });
+  }
+
+  // Social media links
+  const socialIcons = document.querySelectorAll('.icon i');
+  socialIcons.forEach(icon => {
+      icon.addEventListener('click', function() {
+          const platform = this.className.split('-').pop();
+          const socialLinks = {
+              'f': 'https://facebook.com/calsyy',
+              'twitter': 'https://twitter.com/calsyy',
+              'instagram': 'https://instagram.com/calsyy',
+              'youtube': 'https://youtube.com/calsyy'
+          };
+          if (socialLinks[platform]) {
+              window.open(socialLinks[platform], '_blank');
+          }
+      });
+      // Make icons clickable visually
+      icon.style.cursor = 'pointer';
+  });
+
+  // Features section hover effects
+  const featureCards = document.querySelectorAll('.feature-card');
+  featureCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+      });
+      card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+      });
+  });
+  
+  // Cart Logic
+  let cartItems = 0;
+  const cart = JSON.parse(localStorage.getItem('cartData')) || [];
+
+  function showCartNotification(productName, price, imageUrl) {
+    const notification = document.querySelector('.cart-notification');
+    const productImage = notification.querySelector('.notification-product-image');
+    const productNameElement = notification.querySelector('.notification-product-name');
+    const productPriceElement = notification.querySelector('.notification-product-price');
+    const cartCountElement = notification.querySelector('.cart-count');
+
+    productImage.src = imageUrl;
+    productNameElement.textContent = productName;
+    productPriceElement.textContent = price;
+    cartItems++;
+    cartCountElement.textContent = cartItems;
+
+    // Add product to cart array
+    cart.push({ name: productName, price: parseFloat(price.replace('₹', '')), imageUrl, quantity: 1 });
+    localStorage.setItem('cartData', JSON.stringify(cart)); // Save cart data to localStorage
+
+    notification.classList.add('active');
+
+    setTimeout(() => {
+      notification.classList.remove('active');
+    }, 3000);
+  }
+
+  document.querySelectorAll('.cta-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const productCard = e.target.closest('.product-card');
+      const productName = productCard.querySelector('h3').textContent;
+      const productPrice = productCard.querySelector('p').textContent;
+      const productImage = productCard.querySelector('img').src;
+
+      showCartNotification(productName, productPrice, productImage);
+    });
+  });
+
+  document.querySelector('.view-cart-link').addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    window.location.href = 'cart.html'; // Redirect to cart.html
+  });
+});
 
 async function fetchProductData() {
   try {
