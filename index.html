@@ -84,6 +84,12 @@
       .modal.show {
       transform: translateY(0);
       }
+      .testimonial-card {
+    background: white;
+    border-radius: 16px;
+    border-left: 4px solid #DC2626;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
     </style>
   </head>
   <body class="bg-white w-[375px] min-h-[762px] mx-auto relative">
@@ -209,22 +215,55 @@
           </div>
         </div>
       </div> <!-- End of Our Services block -->
-      <div class="bg-gray-100 rounded-lg p-4 mb-8">
-        <h2 class="text-lg font-semibold mb-4">Client Reviews</h2>
-        <div class="space-y-4">
-          <div class="p-2 border rounded">
-            <p class="text-sm">"Respected Ayush sir, once again I want to render my very spl & valuable thanks to you for making my life happy, joyful & gladful. Its because of you I
-m healing day by day & night ..." - Pawan Pareek</p>
-          </div>
-          <div class="p-2 border rounded">
-            <p class="text-sm">"Thank you Ayush bhai for making me feel good abt my own self. I haven't cried and no panic attacks. All because of your coaching.
-" - Neha Singh</p>
-          </div>
-          <div class="p-2 border rounded">
-            <p class="text-sm">"True life saver! Ayush sir ke saath consultation sabse best decision tha." - Arpit Kulsestra</p>
-          </div>
+      <!-- Updated Review Section -->
+<div class="space-y-4 mb-8">
+  <h2 class="text-lg font-semibold mb-4">Client Reviews</h2>
+  
+  <div class="testimonial-card p-4">
+    <div class="flex items-center mb-3">
+      <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+        <span class="text-primary font-bold">P</span>
+      </div>
+      <div class="ml-3">
+        <h4 class="font-semibold text-sm">Paban Pareek</h4>
+        <div class="flex items-center text-yellow-400 text-sm">
+          ★★★★★
         </div>
       </div>
+    </div>
+    <p class="text-sm text-gray-700">"Respected Ayush sir, once again I want to render my very spl & valuable thanks to you for making my life happy, joyful & gladful. Its because of you I'm healing day by day..."</p>
+  </div>
+
+  <div class="testimonial-card p-4">
+    <div class="flex items-center mb-3">
+      <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+        <span class="text-primary font-bold">N</span>
+      </div>
+      <div class="ml-3">
+        <h4 class="font-semibold text-sm">Neha Singh</h4>
+        <div class="flex items-center text-yellow-400 text-sm">
+          ★★★★★
+        </div>
+      </div>
+    </div>
+    <p class="text-sm text-gray-700">"Thank you Ayush bhai for making me feel good abt my own self. I haven't cried and no panic attacks. All because of your coaching."</p>
+  </div>
+
+  <div class="testimonial-card p-4">
+    <div class="flex items-center mb-3">
+      <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+        <span class="text-primary font-bold">A</span>
+      </div>
+      <div class="ml-3">
+        <h4 class="font-semibold text-sm">Arpit Kulsestra</h4>
+        <div class="flex items-center text-yellow-400 text-sm">
+          ★★★★★
+        </div>
+      </div>
+    </div>
+    <p class="text-sm text-gray-700">"True life saver! Ayush sir ke saath consultation sabse best decision tha."</p>
+  </div>
+</div>
     </main>
     <button
       onclick="showModal()"
