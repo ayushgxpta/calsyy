@@ -309,14 +309,14 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
       class="fixed bottom-4 left-4 right-4 bg-primary text-white py-3 rounded-button shadow-lg flex items-center justify-center cursor-pointer"
     >
       <i class="ri-message-3-line mr-2"></i>
-      Book My Call Now at ₹599/session
+      Book My Call Now at ₹499/session
     </button>
     <div
       id="consultationModal"
       class="modal fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-xl p-6 z-50"
     >
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-semibold">Book Your Session at ₹599/Hour</h3>
+        <h3 class="text-lg font-semibold">Book Your Session at ₹499/Hour</h3>
         <button
           onclick="hideModal()"
           class="w-8 h-8 flex items-center justify-center"
@@ -388,7 +388,7 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
           type="submit"
           class="w-full bg-primary text-white py-3 rounded-button"
         >
-          Pay Now - ₹599
+          Pay Now - ₹499
         </button>
       </form>
     </div>
@@ -416,7 +416,7 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
     if (response.ok) {
       const options = {
         key: "rzp_live_RYM7emMrDcpAIO", // API key must be in quotes
-        amount: 100,
+        amount: 49900,
         currency: "INR",
         name: "Ayush Gupta Counseling",
         description: ` Name : ${name} | Reason : ${reason} | Number : ${contact} `, // Include reason in description
@@ -429,11 +429,11 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
           color: "#DC2626"
         },
         handler: function(response) {
-          alert("Payment successful! Payment ID: " + response.razorpay_payment_id + "| We'll Be Contacting You Within 12 Hours");
+          alert("We'll Be Contacting You Within 12 Hours✨" + "Payment successful ✅ Payment ID: " + response.razorpay_payment_id  );
         },
         modal: {
           ondismiss: function() {
-            alert('Payment closed - session not booked');
+            alert('Payment Closed - Session Not Booked');
           }
         }
       };
@@ -445,7 +445,7 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
       hideModal(); // Close the modal after submission
 
     } else {
-      alert('Form submission failed - please try again');
+      alert('Form Submission Failed - Please Try Again');
     }
   } catch (error) {
     console.error('Error:', error);
