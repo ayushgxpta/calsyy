@@ -429,11 +429,13 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
           color: "#DC2626"
         },
         handler: function(response) {
-  // Facebook Lead Tracking
-  fbq('track', 'Lead', {
+ // Facebook Purchase Event Tracking
+  fbq('track', 'Purchase', {
     content_name: reason,
     value: 499,
-    currency: 'INR'
+    currency: 'INR',
+    content_ids: [reason],
+    content_type: 'product'
   });
 
           alert("We'll Be Contacting You Within 12 Hours✨" + "Payment successful ✅ Payment ID: " + response.razorpay_payment_id  );
