@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=375px, initial-scale=1.0" />
+    <title>Thank You for Booking | Calsyy/Ayush Gupta Consult</title>
+    <meta name="description" content="Thank you for booking your session. Your journey to emotional healing starts now.">
+    <meta name="google-site-verification" content="60jDXWycdz3Ih42wG70mWFfBoRD4MgcM-VzspHepuTs" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #DC2626;
+        --secondary: #FEE2E2;
+      }
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#DC2626",
+              secondary: "#FEE2E2",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1234534731714513');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body class="bg-white w-[375px] min-h-[762px] mx-auto relative">
+    <nav class="fixed top-0 w-full bg-white shadow-sm z-50 px-4 py-3 flex items-center justify-between">
+      <div class="font-['Pacifico'] text-[1rem] text-primary">Calsyy/Ayush Gupta Consult</div>
+    </nav>
+
+    <main class="pt-16 pb-24 px-4 flex flex-col items-center justify-center min-h-screen">
+      <div class="text-center">
+        <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="ri-checkbox-circle-fill text-primary text-4xl"></i>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-gray-900 mb-4">
+          Your Session is Confirmed<span id="userGreeting" class="text-primary"></span>! 🎉
+        </h1>
+        
+        <p class="text-gray-600 mb-6">
+          Thank you for trusting us with your emotional well-being. Ayush Gupta will contact you shortly at your provided number to schedule your session.
+        </p>
+
+        <div class="bg-secondary rounded-lg p-4 mb-8 text-left">
+          <div class="flex items-start mb-4">
+            <div class="w-8 h-8 bg-primary/10 rounded-button flex items-center justify-center mr-3">
+              <i class="ri-time-line text-primary"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">What's Next?</h3>
+              <p class="text-sm text-gray-600">Expect a call within 12 hours to finalize your session timing</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="w-8 h-8 bg-primary/10 rounded-button flex items-center justify-center mr-3">
+              <i class="ri-customer-service-line text-primary"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">Need Immediate Help?</h3>
+              <p class="text-sm text-gray-600">WhatsApp us at +91 99204 41612</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex items-center justify-center space-x-4">
+          <a href="https://instagram.com/calsyy" class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+            <i class="ri-instagram-line text-primary text-xl"></i>
+          </a>
+          <a href="https://wa.me/919920441612" class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+            <i class="ri-whatsapp-line text-primary text-xl"></i>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Get name from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const userName = urlParams.get('name');
+
+      // Update greeting if name exists
+      if(userName) {
+        const greetingElement = document.getElementById('userGreeting');
+        greetingElement.innerHTML = `, ${userName}`;
+      }
+
+      // Tracking
+      fbq('track', 'Lead');
+      fbq('track', 'Purchase', {
+        value: 499,
+        currency: 'INR'
+      });
+    </script>
+  </body>
+</html>
