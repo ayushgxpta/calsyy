@@ -429,23 +429,22 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
           color: "#DC2626"
         },
 
-       handler: function(response) {
+      handler: function(response) {
   // Get form values
   const userName = document.getElementById('name').value;
   const reason = document.getElementById('reason').value;
   const contact = document.getElementById('contact').value;
 
-  // Create URL parameters
+  // Create URL parameters with proper encoding
   const params = new URLSearchParams({
     name: encodeURIComponent(userName),
     reason: encodeURIComponent(reason),
     contact: encodeURIComponent(contact)
   });
 
-  // Redirect with all parameters
+  // Redirect to thankyou.html with parameters
   window.location.href = `thankyou.html?${params.toString()}`;
 },
-
         
         
         modal: {
