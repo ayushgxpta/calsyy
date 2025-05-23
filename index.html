@@ -429,13 +429,21 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
           color: "#DC2626"
         },
 
-        // In your original page's Razorpay handler:
-handler: function(response) {
+       handler: function(response) {
+  // Get form values
   const userName = document.getElementById('name').value;
   const reason = document.getElementById('reason').value;
   const contact = document.getElementById('contact').value;
 
-  window.location.href = `thankyou.html?name=${encodeURIComponent(userName)}&reason=${encodeURIComponent(reason)}&contact=${encodeURIComponent(contact)}`;
+  // Create URL parameters
+  const params = new URLSearchParams({
+    name: encodeURIComponent(userName),
+    reason: encodeURIComponent(reason),
+    contact: encodeURIComponent(contact)
+  });
+
+  // Redirect with all parameters
+  window.location.href = `thankyou.html?${params.toString()}`;
 },
 
         
