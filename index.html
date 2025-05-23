@@ -428,19 +428,17 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
         theme: {
           color: "#DC2626"
         },
-       handler: function(response) {
-  // Facebook Purchase Event Tracking
-  fbq('track', 'Purchase', {
-    content_name: reason,
-    value: 499,
-    currency: 'INR',
-    content_ids: [reason],
-    content_type: 'service'
-  });
 
-  // Redirect to thank you page
-  window.location.href = "thankyou.html"; // Change this URL if needed
+        // In your original page's Razorpay handler:
+handler: function(response) {
+  const userName = document.getElementById('name').value;
+  const reason = document.getElementById('reason').value;
+  const contact = document.getElementById('contact').value;
+
+  window.location.href = `thankyou.html?name=${encodeURIComponent(userName)}&reason=${encodeURIComponent(reason)}&contact=${encodeURIComponent(contact)}`;
 },
+
+        
         
         modal: {
           ondismiss: function() {
