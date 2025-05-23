@@ -12,31 +12,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
     <style>
-      :root {
-        --primary: #DC2626;
-        --secondary: #FEE2E2;
-      }
+      :root { --primary: #DC2626; --secondary: #FEE2E2; }
       :where([class^="ri-"])::before { content: "\f3c2"; }
     </style>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            colors: {
-              primary: "#DC2626",
-              secondary: "#FEE2E2",
-            },
+            colors: { primary: "#DC2626", secondary: "#FEE2E2" },
             borderRadius: {
-              none: "0px",
-              sm: "4px",
-              DEFAULT: "8px",
-              md: "12px",
-              lg: "16px",
-              xl: "20px",
-              "2xl": "24px",
-              "3xl": "32px",
-              full: "9999px",
-              button: "8px",
+              none: "0px", sm: "4px", DEFAULT: "8px",
+              md: "12px", lg: "16px", xl: "20px",
+              "2xl": "24px", "3xl": "32px", full: "9999px", button: "8px"
             },
           },
         },
@@ -44,20 +31,15 @@
     </script>
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1234534731714513');
-    fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1234534731714513'); fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
-    /></noscript>
+    src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
   </head>
   <body class="bg-white w-[375px] min-h-[762px] mx-auto relative">
@@ -78,9 +60,7 @@
         <div class="bg-green-100 rounded-lg p-4 mb-4">
           <div class="flex items-center justify-center gap-2">
             <i class="ri-wallet-3-line text-green-600"></i>
-            <p class="font-medium">
-              Payment Received: <span class="text-green-700">₹499</span>
-            </p>
+            <p class="font-medium">Payment Received: <span class="text-green-700">₹499</span></p>
           </div>
         </div>
 
@@ -91,7 +71,7 @@
             </div>
             <div>
               <h3 class="font-semibold">Client Name</h3>
-              <p class="text-sm text-gray-600" id="clientName">-</p>
+              <p class="text-sm text-gray-600" id="clientName">Loading...</p>
             </div>
           </div>
 
@@ -101,7 +81,7 @@
             </div>
             <div>
               <h3 class="font-semibold">Session Type</h3>
-              <p class="text-sm text-gray-600" id="sessionType">-</p>
+              <p class="text-sm text-gray-600" id="sessionType">Loading...</p>
             </div>
           </div>
         </div>
@@ -131,7 +111,7 @@
         <div class="bg-primary/10 rounded-lg p-4 mb-6">
           <p class="text-sm text-gray-700">
             A confirmation has been sent to: 
-            <span id="contactNumber" class="font-medium">+91 XXXXXXXX</span>
+            <span id="contactNumber" class="font-medium">Loading...</span>
           </p>
         </div>
 
@@ -150,31 +130,28 @@
       // Get URL parameters
       const urlParams = new URLSearchParams(window.location.search);
       
-      // Personalization
-      const userName = urlParams.get('name');
-      const reason = urlParams.get('reason');
-      const contact = urlParams.get('contact');
+      // Personalize content
+      function displayDetails() {
+        const userName = decodeURIComponent(urlParams.get('name') || '');
+        const reason = decodeURIComponent(urlParams.get('reason') || 'Relationship Counseling');
+        const contact = decodeURIComponent(urlParams.get('contact') || '');
 
-      // Update elements
-      if(userName) {
-        document.getElementById('userGreeting').innerHTML = `, ${userName}`;
-        document.getElementById('clientName').textContent = userName;
-      }
-      
-      if(reason) {
+        // Update elements
+        document.getElementById('userGreeting').textContent = userName ? `, ${userName}` : '';
+        document.getElementById('clientName').textContent = userName || 'Not provided';
         document.getElementById('sessionType').textContent = reason;
+        document.getElementById('contactNumber').textContent = contact || 'Number not provided';
       }
 
-      if(contact) {
-        document.getElementById('contactNumber').textContent = contact;
-      }
+      // Initialize
+      displayDetails();
 
-      // Tracking
+      // Facebook tracking
       fbq('track', 'Purchase', {
         value: 499,
         currency: 'INR',
-        content_name: reason || 'General Counseling',
-        content_ids: [reason || 'GC001'],
+        content_name: decodeURIComponent(urlParams.get('reason')) || 'General',
+        content_ids: [decodeURIComponent(urlParams.get('reason')) || 'GC001'],
         content_type: 'product'
       });
     </script>
