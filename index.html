@@ -428,8 +428,8 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
         theme: {
           color: "#DC2626"
         },
-        handler: function(response) {
- // Facebook Purchase Event Tracking
+       handler: function(response) {
+  // Facebook Purchase Event Tracking
   fbq('track', 'Purchase', {
     content_name: reason,
     value: 499,
@@ -438,8 +438,10 @@ src="https://www.facebook.com/tr?id=1234534731714513&ev=PageView&noscript=1"
     content_type: 'service'
   });
 
-          alert("We'll Be Contacting You Within 12 Hours✨" + "Payment successful ✅ Payment ID: " + response.razorpay_payment_id  );
-        },
+  // Redirect to thank you page
+  window.location.href = "thankyou.html"; // Change this URL if needed
+},
+        
         modal: {
           ondismiss: function() {
             alert('Payment Closed - Session Not Booked');
